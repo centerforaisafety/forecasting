@@ -1,0 +1,14 @@
+python-dotenv
+modal
+openai
+anthropic
+google-generativeai
+playwright
+fireworks-ai
+dateparser
+lxml[html_clean]
+git+https://github.com/justinphan3110cais/newspaper4k-forecasting-ai.git
+ray
+uvicorn
+fastapi
+motor

@@ -1,0 +1,66 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Forecast {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // Author info
+  name         String?
+  emails        String[] @default([])
+
+  messages Message[]
+  sources    Json     @default("[]")
+  settings Json
+
+  // Public flag for sharing
+  public Boolean @default(false)
+  extraInfo Json  @default("{}")
+}
+
+model sources {
+  id     String   @id @map("_id")
+  query    String
+  title    String?
+  favicon  String?
+  snippet  String?
+  link     String?
+  summarized_content String?
+  date     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model benchmarks {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  benchmarkType     String?
+  question          String
+  backgroundText    String?
+  category          String?
+  beforeTimestamp   Int?
+  resolution        Float?
+  predictions       Json?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+type Message {
+  content String
+  role    Role
+}
+
+enum Role {
+  user
+  assistant
+}
+
+model AdminUser {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  email String @unique
+}
